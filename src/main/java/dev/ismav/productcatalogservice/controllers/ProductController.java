@@ -1,37 +1,53 @@
 package dev.ismav.productcatalogservice.controllers;
 
-import dev.ismav.productcatalogservice.dtos.ProductRequestDTO;
-import dev.ismav.productcatalogservice.dtos.ProductResponseDTO;
+import dev.ismav.productcatalogservice.dtos.ProductDTO;
 import dev.ismav.productcatalogservice.models.Product;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import dev.ismav.productcatalogservice.services.IProductService;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@RestController  //This class will be ready to receive requests
+@RestController
+@RequestMapping("/products") // Global prefix for all methods in this class
 public class ProductController {
 
+    // Final ensures the service is not modified after injection
+    private final IProductService productService;
 
-    //post a product(into database)
-    @PostMapping("/products")
-    ProductResponseDTO createProduct(ProductRequestDTO productdto){
-        ProductResponseDTO product = new ProductResponseDTO();
-        return  product;
+    // CONSTRUCTOR INJECTION: This is the best practice for Service injection
+    // It prevents NullPointerExceptions and ensures the bean is ready.
+    public ProductController(IProductService productService) {
+        this.productService = productService;
     }
 
-    //GET product by id
-    @PostMapping("/products/{id}")
-    ProductResponseDTO getProductByID(@PathVariable Long id){
-        return new ProductResponseDTO();
+    // POST a product
+    // Added @RequestBody so Spring can parse incoming JSON into the DTO
+    @PostMapping
+    public ProductDTO createProduct(@RequestBody ProductDTO productdto) {
+        // Implementation: return productService.createProduct(productdto);
+        return new ProductDTO();
     }
 
-    //get all products
-    @GetMapping("/products")
-    String getAllProducts(){
-        //return new ArrayList<ProductResponseDTO>();
-        return "Hey Vams!!";
+    // GET product by id
+    // Path becomes /products/{id}
+    @GetMapping("/{id}")
+    public ProductDTO getProductByID(@PathVariable Long id) {
+        // Instead of creating new product,  we need to get use of real product from service
+        Product product = productService.getAproductByID(id);
+
+        if (product == null) {
+            return null;
+        }
+
+        // 2️⃣ Convert using Product's method
+        return product.convert();
+    }
+
+    // GET all products
+    // Return type changed to List<ProductDTO>
+    @GetMapping
+    public List<ProductDTO> getAllProducts() {
+        // Implementation: return productService.getAllProducts();
+        return null;
     }
 }

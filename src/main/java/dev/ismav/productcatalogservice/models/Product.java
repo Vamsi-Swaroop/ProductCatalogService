@@ -1,10 +1,10 @@
 package dev.ismav.productcatalogservice.models;
 
+import dev.ismav.productcatalogservice.dtos.ProductDTO;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 public class Product extends BaseModel{
         /*
         name
@@ -15,9 +15,68 @@ public class Product extends BaseModel{
          */
 
     private  String name;
-    private  String desc;
-    private  long price;
+    private Long id;
+    private  String Description;
+    private  Double price;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     private String imageUrl;
     private Category category;
+
+    public ProductDTO convert(){
+        ProductDTO proDto = new ProductDTO();
+        proDto.setName(this.getName());
+        proDto.setPrice(this.getPrice());
+        proDto.setDescription(this.getDescription());
+        proDto.setId(this.getId());
+        return proDto;
+    }
 }
 

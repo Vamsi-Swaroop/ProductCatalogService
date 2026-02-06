@@ -10,6 +10,6 @@ public abstract class BaseModel {
 
     private Date updatedAt;
 
-    private State state; //used for soft delete insteqd of hard delete by which we can use Active or inactive
+    private State state; //used for soft delete instead of hard delete by which we can use Active or inactive
 
 }
