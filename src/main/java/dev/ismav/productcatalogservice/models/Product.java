@@ -76,6 +76,7 @@ public class Product extends BaseModel{
         proDto.setPrice(this.getPrice());
         proDto.setDescription(this.getDescription());
         proDto.setId(this.getId());
+        proDto.setCategory(this.getCategory());
         return proDto;
     }
 }
