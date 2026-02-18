@@ -1,5 +1,6 @@
 package dev.ismav.productcatalogservice.models;
 
+import dev.ismav.productcatalogservice.dtos.FakeStoreProductDTO;
 import dev.ismav.productcatalogservice.dtos.ProductDTO;
 import lombok.Data;
 import lombok.Getter;
@@ -78,6 +79,18 @@ public class Product extends BaseModel{
         proDto.setId(this.getId());
         proDto.setCategory(this.getCategory());
         return proDto;
+    }
+    public FakeStoreProductDTO convertToFakeStoreProductDTO(){
+        FakeStoreProductDTO fakeStoreProductDTO = new FakeStoreProductDTO();
+        fakeStoreProductDTO.setId(this.getId());
+        fakeStoreProductDTO.setTitle(this.getName());
+        fakeStoreProductDTO.setPrice(this.getPrice());
+        fakeStoreProductDTO.setDescription(this.getDescription());
+        fakeStoreProductDTO.setImage(this.getImageUrl());
+        if(this.getCategory()!=null){
+            fakeStoreProductDTO.setCategory(this.getCategory().getName());
+        }
+        return  fakeStoreProductDTO;
     }
 }
 

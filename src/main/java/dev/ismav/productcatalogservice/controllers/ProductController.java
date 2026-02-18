@@ -2,9 +2,11 @@ package dev.ismav.productcatalogservice.controllers;
 
 import dev.ismav.productcatalogservice.dtos.ProductDTO;
 import dev.ismav.productcatalogservice.models.Product;
+import dev.ismav.productcatalogservice.services.FakeStoreProductService;
 import dev.ismav.productcatalogservice.services.IProductService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,14 +34,17 @@ public class ProductController {
     // Path becomes /products/{id}
     @GetMapping("/{id}")
     public ProductDTO getProductByID(@PathVariable Long id) {
-        // Instead of creating new product,  we need to get use of real product from service
-        Product product = productService.getAproductByID(id);
-
-        if (product == null) {
-            return null;
+        if(id<1){
+            throw new IllegalArgumentException("Invalid product id(may be zero or negative)");
         }
 
-        // 2️⃣ Convert using Product's method
+        // Instead of creating new product,  we need to get use of real product from service
+        Product product = productService.getAproductByID(id);
+        if (product == null) {
+            throw new IllegalArgumentException("Product not found with id: " + id);
+        }
+
+        //Convert using Product's method
         return product.convert();
     }
 
@@ -48,6 +53,32 @@ public class ProductController {
     @GetMapping
     public List<ProductDTO> getAllProducts() {
         // Implementation: return productService.getAllProducts();
+        //call the service to return DTOs
+        List<ProductDTO> productDTOS = new ArrayList<>();
+        List<Product> products = productService.getAllProducts();
+        if(products!= null){
+            for(Product product: products){
+                productDTOS.add(product.convert());
+            }
+        }
+        return  productDTOS;
+    }
+
+    @PutMapping("/{productId}")
+    public ProductDTO updateProduct(
+            @PathVariable("productId") Long productId,
+            @RequestBody ProductDTO productDTO) {
+        Product product =
+                productService.updateProduct(
+                        productDTO.convertToProduct(),
+                        productId
+                );
+
+        if (product != null) {
+            return product.convert();
+        }
+
         return null;
     }
+
 }
