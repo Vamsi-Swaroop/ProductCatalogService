@@ -2,10 +2,14 @@ package dev.ismav.productcatalogservice.models;
 
 import dev.ismav.productcatalogservice.dtos.FakeStoreProductDTO;
 import dev.ismav.productcatalogservice.dtos.ProductDTO;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+@Entity
 public class Product extends BaseModel{
         /*
         name
@@ -69,6 +73,8 @@ public class Product extends BaseModel{
     }
 
     private String imageUrl;
+
+    @ManyToOne(cascade = CascadeType.ALL)
     private Category category;
 
     public ProductDTO convert(){
