@@ -18,7 +18,24 @@ public abstract class BaseModel {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
     private Date createdAt;  //stores date inn epoch format
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 
     private Date updatedAt;
 

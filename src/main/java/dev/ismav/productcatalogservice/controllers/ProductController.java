@@ -4,6 +4,7 @@ import dev.ismav.productcatalogservice.dtos.ProductDTO;
 import dev.ismav.productcatalogservice.models.Product;
 import dev.ismav.productcatalogservice.services.FakeStoreProductService;
 import dev.ismav.productcatalogservice.services.IProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class ProductController {
 
     // CONSTRUCTOR INJECTION: This is the best practice for Service injection
     // It prevents NullPointerExceptions and ensures the bean is ready.
-    public ProductController(IProductService productService) {
+    public ProductController(@Qualifier("storageProductService")IProductService productService) {
         this.productService = productService;
     }
 
