@@ -2,11 +2,13 @@ package dev.ismav.productcatalogservice.services;
 
 import dev.ismav.productcatalogservice.models.Product;
 import dev.ismav.productcatalogservice.repositories.ProductRepository;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Primary
 @Service("storageProductService")
 public class StorageProductService implements IProductService{
     private ProductRepository productRepository;
